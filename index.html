@@ -1,0 +1,1583 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>⚡ MVMT Oregon — Leader Hub</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #0a0a0a;
+    --dark: #111111;
+    --panel: #161616;
+    --border: #222222;
+    --gold: #f0b429;
+    --orange: #E86A2A;
+    --red: #e63946;
+    --green: #2ec27e;
+    --text: #e8e8e8;
+    --muted: #666666;
+    --white: #F5F1EB;
+  }
+
+- { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+body {
+background: var(–black);
+color: var(–text);
+font-family: ‘Barlow’, sans-serif;
+min-height: 100vh;
+overflow-x: hidden;
+}
+
+body::before {
+content: ‘’;
+position: fixed;
+inset: 0;
+background-image: url(“data:image/svg+xml,%3Csvg viewBox=‘0 0 256 256’ xmlns=‘http://www.w3.org/2000/svg’%3E%3Cfilter id=‘noise’%3E%3CfeTurbulence type=‘fractalNoise’ baseFrequency=‘0.9’ numOctaves=‘4’ stitchTiles=‘stitch’/%3E%3C/filter%3E%3Crect width=‘100%25’ height=‘100%25’ filter=‘url(%23noise)’ opacity=‘0.04’/%3E%3C/svg%3E”);
+pointer-events: none;
+z-index: 0;
+opacity: 0.4;
+}
+
+/* HEADER */
+header {
+position: sticky;
+top: 0;
+z-index: 100;
+background: rgba(10,10,10,0.97);
+backdrop-filter: blur(12px);
+border-bottom: 1px solid var(–border);
+padding: 0 1.5rem;
+display: flex;
+align-items: center;
+justify-content: space-between;
+height: 60px;
+}
+
+.logo-text {
+font-family: ‘Barlow Condensed’, sans-serif;
+font-weight: 900;
+font-size: 1.4rem;
+letter-spacing: 0.12em;
+color: var(–gold);
+}
+
+.logo-sub {
+font-family: ‘Barlow Condensed’, sans-serif;
+font-size: 0.65rem;
+letter-spacing: 0.2em;
+color: var(–muted);
+text-transform: uppercase;
+}
+
+.sync-indicator {
+display: flex;
+align-items: center;
+gap: 6px;
+font-family: ‘Barlow Condensed’, sans-serif;
+font-size: 0.7rem;
+letter-spacing: 0.12em;
+color: var(–muted);
+text-transform: uppercase;
+}
+
+.sync-dot {
+width: 7px; height: 7px;
+border-radius: 50%;
+background: var(–green);
+animation: pulse 2s infinite;
+}
+
+.sync-dot.loading { background: var(–gold); animation: pulse 0.5s infinite; }
+.sync-dot.error { background: var(–red); animation: none; }
+
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+/* TOP NAV */
+.top-nav {
+background: var(–dark);
+border-bottom: 1px solid var(–border);
+padding: 0 1.5rem;
+display: flex;
+overflow-x: auto;
+position: relative;
+z-index: 1;
+-webkit-overflow-scrolling: touch;
+}
+
+.top-nav::-webkit-scrollbar { display: none; }
+
+.nav-tab {
+font-family: ‘Barlow Condensed’, sans-serif;
+font-weight: 700;
+font-size: 0.8rem;
+letter-spacing: 0.15em;
+text-transform: uppercase;
+padding: 0.9rem 1.2rem;
+color: var(–muted);
+cursor: pointer;
+border-bottom: 2px solid transparent;
+border-left: none; border-right: none; border-top: none;
+background: none;
+white-space: nowrap;
+transition: all 0.2s;
+flex-shrink: 0;
+}
+
+.nav-tab:hover { color: var(–text); }
+.nav-tab.active { color: var(–gold); border-bottom-color: var(–gold); }
+
+/* MAIN */
+main {
+max-width: 1100px;
+margin: 0 auto;
+padding: 1.5rem;
+position: relative;
+z-index: 1;
+}
+
+.page { display: none; }
+.page.active { display: block; animation: fadeUp 0.25s ease; }
+
+@keyframes fadeUp { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:translateY(0)} }
+
+/* HERO */
+.hero {
+padding: 3rem 0 2rem;
+position: relative;
+overflow: hidden;
+}
+
+.hero-eyebrow {
+font-size: 0.65rem;
+font-weight: 600;
+letter-spacing: 0.25em;
+text-transform: uppercase;
+color: var(–orange);
+margin-bottom: 1rem;
+display: flex;
+align-items: center;
+gap: 0.75rem;
+}
+
+.hero-eyebrow::before { content:’’; display:block; width:24px; height:1px; background:var(–orange); }
+
+.hero h1 {
+font-family: ‘Barlow Condensed’, sans-serif;
+font-weight: 900;
+font-size: clamp(3.5rem, 10vw, 7rem);
+line-height: 0.92;
+letter-spacing: 0.02em;
+color: var(–white);
+margin-bottom: 1.5rem;
+}
+
+.hero h1 span { color: var(–orange); }
+
+.north-star {
+display: inline-flex;
+gap: 1.5rem;
+padding: 1rem 1.5rem;
+border: 1px solid var(–border);
+background: var(–panel);
+position: relative;
+overflow: hidden;
+flex-wrap: wrap;
+}
+
+.north-star::before {
+content: ‘’;
+position: absolute;
+left: 0; top: 0; bottom: 0;
+width: 3px;
+background: var(–orange);
+}
+
+.ns-item {
+font-family: ‘Barlow Condensed’, sans-serif;
+font-weight: 900;
+font-size: 1.3rem;
+letter-spacing: 0.1em;
+color: var(–white);
+}
+
+.ns-item span {
+display: block;
+font-family: ‘Barlow’, sans-serif;
+font-size: 0.6rem;
+font-weight: 500;
+letter-spacing: 0.15em;
+text-transform: uppercase;
+color: var(–muted);
+margin-top: 0.1rem;
+}
+
+.ns-div { width: 1px; background: var(–border); align-self: stretch; }
+
+/* SECTION HEADER */
+.section-label {
+font-size: 0.65rem;
+font-weight: 600;
+letter-spacing: 0.25em;
+text-transform: uppercase;
+color: var(–orange);
+margin-bottom: 0.4rem;
+}
+
+.section-title {
+font-family: ‘Barlow Condensed’, sans-serif;
+font-weight: 900;
+font-size: clamp(1.8rem, 5vw, 3rem);
+letter-spacing: 0.05em;
+color: var(–white);
+margin-bottom: 1.5rem;
+line-height: 1;
+text-transform: uppercase;
+}
+
+.section-title span { color: var(–gold); }
+
+/* CARDS */
+.card {
+background: var(–panel);
+border: 1px solid var(–border);
+padding: 1.5rem;
+margin-bottom: 1.5rem;
+}
+
+.card-title {
+font-family: ‘Barlow Condensed’, sans-serif;
+font-weight: 800;
+font-size: 0.85rem;
+letter-spacing: 0.18em;
+text-transform: uppercase;
+color: var(–gold);
+margin-bottom: 1.25rem;
+display: flex;
+align-items: center;
+gap: 8px;
+}
+
+.card-title::after { content:’’; flex:1; height:1px; background:var(–border); }
+
+/* CADENCE GRID */
+.cadence-grid {
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+gap: 1px;
+background: var(–border);
+border: 1px solid var(–border);
+margin-bottom: 1.5rem;
+}
+
+.cadence-card {
+background: var(–panel);
+padding: 1.5rem;
+}
+
+.cadence-day {
+font-family: ‘Barlow Condensed’, sans-serif;
+font-size: 0.65rem;
+letter-spacing: 0.2em;
+text-transform: uppercase;
+color: var(–gold);
+margin-bottom: 0.3rem;
+}
+
+.cadence-name {
+font-family: ‘Barlow Condensed’, sans-serif;
+font-weight: 900;
+font-size: 1.5rem;
+letter-spacing: 0.05em;
+color: var(–white);
+margin-bottom: 1rem;
+text-transform: uppercase;
+}
+
+.cadence-items { list-style: none; }
+
+.cadence-items li {
+font-size: 0.82rem;
+color: var(–muted);
+padding: 0.35rem 0;
+border-bottom: 1px solid rgba(255,255,255,0.04);
+display: flex;
+align-items: flex-start;
+gap: 0.6rem;
+line-height: 1.5;
+}
+
+.cadence-items li::before { content:‘→’; color:var(–orange); font-size:0.7rem; margin-top:0.15rem; flex-shrink:0; }
+.cadence-items li:last-child { border-bottom: none; }
+
+.time-badge {
+font-family: ‘Barlow Condensed’, sans-serif;
+font-size: 0.68rem;
+color: var(–gold);
+background: rgba(240,180,41,0.12);
+padding: 0.1rem 0.45rem;
+white-space: nowrap;
+flex-shrink: 0;
+}
+
+.mandatory {
+font-size: 0.58rem;
+font-weight: 700;
+letter-spacing: 0.1em;
+text-transform: uppercase;
+color: var(–orange);
+background: rgba(232,106,42,0.1);
+border: 1px solid rgba(232,106,42,0.2);
+padding: 0.1rem 0.4rem;
+margin-left: auto;
+flex-shrink: 0;
+}
+
+/* STATS ROW */
+.stats-row {
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+gap: 1px;
+background: var(–border);
+border: 1px solid var(–border);
+margin-bottom: 1.5rem;
+}
+
+.stat-box {
+background: var(–panel);
+padding: 1.25rem;
+position: relative;
+overflow: hidden;
+}
+
+.stat-box::before { content:’’; position:absolute; top:0;left:0;right:0; height:2px; background:var(–gold); }
+
+.stat-label {
+font-family: ‘Barlow Condensed’, sans-serif;
+font-size: 0.6rem;
+letter-spacing: 0.2em;
+text-transform: uppercase;
+color: var(–muted);
+margin-bottom: 6px;
+}
+
+.stat-value {
+font-family: ‘Barlow Condensed’, sans-serif;
+font-weight: 900;
+font-size: 2rem;
+line-height: 1;
+color: var(–text);
+}
+
+.stat-value.gold { color: var(–gold); }
+.stat-value.green { color: var(–green); }
+.stat-value.red { color: var(–red); }
+.stat-context { font-size: 0.72rem; color: var(–muted); margin-top: 4px; }
+
+/* MARKET CARDS */
+.market-grid {
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+gap: 1px;
+background: var(–border);
+border: 1px solid var(–border);
+margin-bottom: 1.5rem;
+}
+
+.market-card {
+background: var(–panel);
+padding: 1.5rem;
+transition: background 0.15s;
+}
+
+.market-card.submitted { border-top: 2px solid var(–green); }
+.market-card.pending { border-top: 2px solid var(–red); }
+
+.market-name {
+font-family: ‘Barlow Condensed’, sans-serif;
+font-weight: 900;
+font-size: 1.4rem;
+letter-spacing: 0.08em;
+text-transform: uppercase;
+margin-bottom: 0.25rem;
+}
+
+.market-bend { color: var(–gold); }
+.market-portland { color: var(–green); }
+.market-medford { color: var(–red); }
+
+.market-status {
+font-family: ‘Barlow Condensed’, sans-serif;
+font-size: 0.62rem;
+letter-spacing: 0.18em;
+text-transform: uppercase;
+color: var(–muted);
+margin-bottom: 1rem;
+display: flex;
+align-items: center;
+gap: 6px;
+}
+
+.status-dot { width:6px; height:6px; border-radius:50%; flex-shrink:0; }
+.dot-green { background: var(–green); }
+.dot-red { background: var(–red); }
+
+.market-numbers {
+display: grid;
+grid-template-columns: 1fr 1fr;
+gap: 0.75rem;
+margin-bottom: 1rem;
+}
+
+.mnum-label {
+font-family: ‘Barlow Condensed’, sans-serif;
+font-size: 0.58rem;
+letter-spacing: 0.15em;
+text-transform: uppercase;
+color: var(–muted);
+margin-bottom: 2px;
+}
+
+.mnum-value {
+font-family: ‘Barlow Condensed’, sans-serif;
+font-weight: 900;
+font-size: 1.8rem;
+line-height: 1;
+color: var(–text);
+}
+
+.drill-btn {
+font-family: ‘Barlow Condensed’, sans-serif;
+font-size: 0.68rem;
+font-weight: 700;
+letter-spacing: 0.15em;
+text-transform: uppercase;
+color: var(–gold);
+background: none;
+border: 1px solid var(–border);
+padding: 6px 12px;
+cursor: pointer;
+transition: all 0.15s;
+width: 100%;
+text-align: left;
+}
+
+.drill-btn:hover { border-color: var(–gold); }
+
+/* FORECAST FORM */
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.form-grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.75rem; }
+
+label {
+display: block;
+font-family: ‘Barlow Condensed’, sans-serif;
+font-size: 0.68rem;
+font-weight: 700;
+letter-spacing: 0.18em;
+text-transform: uppercase;
+color: var(–muted);
+margin-bottom: 5px;
+margin-top: 1rem;
+}
+
+label:first-child { margin-top: 0; }
+
+input, select, textarea {
+width: 100%;
+background: var(–black);
+border: 1px solid var(–border);
+padding: 10px 12px;
+color: var(–text);
+font-family: ‘Barlow’, sans-serif;
+font-size: 0.9rem;
+outline: none;
+transition: border-color 0.2s;
+-webkit-appearance: none;
+}
+
+input:focus, select:focus, textarea:focus { border-color: var(–gold); }
+textarea { resize: vertical; min-height: 75px; }
+select option { background: var(–dark); }
+
+.btn {
+font-family: ‘Barlow Condensed’, sans-serif;
+font-weight: 800;
+font-size: 0.85rem;
+letter-spacing: 0.18em;
+text-transform: uppercase;
+padding: 12px 24px;
+border: none;
+cursor: pointer;
+transition: all 0.15s;
+-webkit-appearance: none;
+}
+
+.btn-primary { background: var(–gold); color: var(–black); }
+.btn-primary:hover { background: #ffc940; }
+.btn-primary:disabled { background: var(–border); color: var(–muted); cursor: not-allowed; }
+
+.btn-ghost { background: transparent; color: var(–muted); border: 1px solid var(–border); }
+.btn-ghost:hover { border-color: var(–gold); color: var(–gold); }
+
+.divider { height: 1px; background: var(–border); margin: 1.25rem 0; }
+
+.element-block {
+background: var(–black);
+border: 1px solid var(–border);
+padding: 1.25rem;
+margin-bottom: 0.75rem;
+}
+
+.element-num {
+font-family: ‘Barlow Condensed’, sans-serif;
+font-weight: 900;
+font-size: 2rem;
+color: var(–border);
+float: right;
+line-height: 1;
+}
+
+.element-name {
+font-family: ‘Barlow Condensed’, sans-serif;
+font-weight: 800;
+font-size: 0.82rem;
+letter-spacing: 0.12em;
+text-transform: uppercase;
+color: var(–gold);
+margin-bottom: 8px;
+}
+
+/* MODAL */
+.modal-overlay {
+display: none;
+position: fixed;
+inset: 0;
+background: rgba(0,0,0,0.88);
+z-index: 500;
+backdrop-filter: blur(4px);
+align-items: flex-start;
+justify-content: center;
+padding: 1.5rem;
+overflow-y: auto;
+-webkit-overflow-scrolling: touch;
+}
+
+.modal-overlay.open { display: flex; }
+
+.modal {
+background: var(–dark);
+border: 1px solid var(–border);
+width: 100%;
+max-width: 640px;
+margin: auto;
+animation: fadeUp 0.25s ease;
+}
+
+.modal-header {
+padding: 1.25rem 1.5rem;
+border-bottom: 1px solid var(–border);
+display: flex;
+justify-content: space-between;
+align-items: center;
+}
+
+.modal-title {
+font-family: ‘Barlow Condensed’, sans-serif;
+font-weight: 900;
+font-size: 1.2rem;
+letter-spacing: 0.08em;
+text-transform: uppercase;
+}
+
+.modal-close { background:none; border:none; color:var(–muted); font-size:1.5rem; cursor:pointer; }
+.modal-body { padding: 1.5rem; }
+
+.detail-row { padding: 0.75rem 0; border-bottom: 1px solid #1a1a1a; }
+.detail-row:last-child { border-bottom: none; }
+.detail-label { font-family:‘Barlow Condensed’,sans-serif; font-size:0.6rem; letter-spacing:0.2em; text-transform:uppercase; color:var(–muted); margin-bottom:3px; }
+.detail-value { font-size:0.88rem; color:var(–text); line-height:1.6; white-space:pre-wrap; }
+
+.detail-nums {
+display: grid;
+grid-template-columns: repeat(3, 1fr);
+gap: 1px;
+background: var(–border);
+border: 1px solid var(–border);
+margin-bottom: 1.25rem;
+}
+
+.detail-num-box { background:var(–panel); padding:1rem; text-align:center; }
+.detail-num-val { font-family:‘Barlow Condensed’,sans-serif; font-weight:900; font-size:1.8rem; color:var(–gold); line-height:1; }
+.detail-num-lbl { font-family:‘Barlow Condensed’,sans-serif; font-size:0.58rem; letter-spacing:0.15em; text-transform:uppercase; color:var(–muted); margin-top:4px; }
+
+/* WAR ROOM CHECKLIST */
+.warroom-grid {
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+gap: 1px;
+background: var(–border);
+border: 1px solid var(–border);
+}
+
+.warroom-item {
+background: var(–panel);
+padding: 1.25rem;
+display: flex;
+gap: 0.85rem;
+align-items: flex-start;
+cursor: pointer;
+transition: background 0.15s;
+-webkit-tap-highlight-color: transparent;
+}
+
+.warroom-item:hover { background: #1a1a1a; }
+
+.warroom-check {
+width: 18px; height: 18px;
+border: 1px solid var(–border);
+background: var(–black);
+flex-shrink: 0;
+margin-top: 0.1rem;
+display: flex;
+align-items: center;
+justify-content: center;
+transition: all 0.15s;
+}
+
+.warroom-item.checked .warroom-check { background: var(–gold); border-color: var(–gold); }
+.warroom-item.checked .warroom-check::after { content:‘✓’; color:black; font-size:0.7rem; font-weight:700; }
+.warroom-item.checked .warroom-text { color: var(–muted); text-decoration: line-through; }
+.warroom-text { font-size:0.83rem; color:var(–text); line-height:1.5; }
+
+/* CONDUCT */
+.conduct-grid {
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+gap: 1.25rem;
+margin-bottom: 1.5rem;
+}
+
+.conduct-card {
+border: 1px solid var(–border);
+padding: 1.5rem;
+position: relative;
+overflow: hidden;
+}
+
+.conduct-card::before { content:’’; position:absolute; top:0;left:0;right:0; height:2px; background:var(–orange); }
+
+.conduct-card-title {
+font-family: ‘Barlow Condensed’, sans-serif;
+font-weight: 900;
+font-size: 1.1rem;
+letter-spacing: 0.06em;
+text-transform: uppercase;
+color: var(–white);
+margin-bottom: 0.85rem;
+}
+
+.conduct-list { list-style: none; }
+.conduct-list li { font-size:0.82rem; color:var(–muted); padding:0.3rem 0; display:flex; gap:0.5rem; align-items:flex-start; border-bottom:1px solid rgba(255,255,255,0.04); line-height:1.5; }
+.conduct-list li::before { content:‘⚡’; font-size:0.6rem; margin-top:0.2rem; flex-shrink:0; }
+.conduct-list li:last-child { border-bottom:none; }
+
+/* FORECAST REFERENCE */
+.forecast-grid {
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+gap: 1.25rem;
+margin-bottom: 1.5rem;
+}
+
+.forecast-card {
+background: var(–panel);
+border: 1px solid var(–border);
+padding: 1.5rem;
+position: relative;
+transition: border-color 0.2s;
+}
+
+.forecast-card:hover { border-color: var(–gold); }
+
+.forecast-number { font-family:‘Barlow Condensed’,sans-serif; font-weight:900; font-size:3rem; color:rgba(240,180,41,0.15); position:absolute; top:0.75rem; right:1rem; line-height:1; }
+.forecast-title { font-family:‘Barlow Condensed’,sans-serif; font-weight:900; font-size:1.2rem; letter-spacing:0.05em; color:var(–white); margin-bottom:0.85rem; text-transform:uppercase; }
+.forecast-items { list-style:none; }
+.forecast-items li { font-size:0.8rem; color:var(–muted); padding:0.3rem 0; border-bottom:1px solid rgba(255,255,255,0.04); display:flex; gap:0.5rem; align-items:flex-start; line-height:1.5; }
+.forecast-items li::before { content:’—’; color:var(–gold); flex-shrink:0; font-size:0.7rem; margin-top:0.15rem; }
+.forecast-items li:last-child { border-bottom:none; }
+
+/* BOOKS */
+.books-grid {
+display: grid;
+grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+gap: 1px;
+background: var(–border);
+border: 1px solid var(–border);
+}
+
+.book-card { background:var(–panel); padding:1.25rem; position:relative; transition:background 0.2s; }
+.book-card:hover { background:#1e1e1e; }
+.book-card.current { background:#1a1208; }
+.book-card.current::before { content:‘CURRENT’; position:absolute; top:0.6rem; right:0.6rem; font-size:0.52rem; font-weight:700; letter-spacing:0.12em; color:var(–gold); background:rgba(240,180,41,0.1); padding:0.15rem 0.4rem; }
+.book-month { font-family:‘Barlow Condensed’,sans-serif; font-size:0.62rem; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; color:var(–gold); margin-bottom:0.4rem; }
+.book-title { font-size:0.88rem; font-weight:500; color:var(–white); margin-bottom:0.2rem; line-height:1.4; }
+.book-author { font-size:0.72rem; color:var(–muted); }
+
+/* QUOTE */
+.quote-block {
+border-left: 3px solid var(–orange);
+padding: 1.25rem 1.5rem;
+margin: 1.5rem 0;
+background: var(–panel);
+}
+
+.quote-text { font-size:0.95rem; color:var(–text); font-style:italic; font-weight:300; line-height:1.7; }
+
+/* OUTPUT */
+.output-block {
+background: var(–black);
+border: 1px solid var(–border);
+padding: 1.25rem;
+font-family: ‘Barlow Condensed’, sans-serif;
+font-size: 0.95rem;
+letter-spacing: 0.03em;
+white-space: pre-wrap;
+line-height: 1.7;
+color: var(–text);
+}
+
+/* HISTORY TABLE */
+.hist-table { width:100%; border-collapse:collapse; font-size:0.85rem; }
+.hist-table th { font-family:‘Barlow Condensed’,sans-serif; font-size:0.62rem; letter-spacing:0.18em; text-transform:uppercase; color:var(–muted); padding:7px 10px; text-align:left; border-bottom:1px solid var(–border); }
+.hist-table td { padding:9px 10px; border-bottom:1px solid #1a1a1a; vertical-align:middle; }
+.hist-table tr:hover td { background:rgba(255,255,255,0.02); cursor:pointer; }
+
+.market-tag { font-family:‘Barlow Condensed’,sans-serif; font-size:0.62rem; letter-spacing:0.1em; text-transform:uppercase; padding:2px 7px; font-weight:700; }
+.tag-bend { background:rgba(240,180,41,0.15); color:var(–gold); }
+.tag-portland { background:rgba(46,194,126,0.15); color:var(–green); }
+.tag-medford { background:rgba(230,57,70,0.15); color:var(–red); }
+
+.accuracy-good { color:var(–green); }
+.accuracy-low { color:var(–red); }
+.accuracy-ok { color:var(–gold); }
+
+/* TOAST */
+.toast {
+position: fixed;
+bottom: 1.5rem;
+right: 1.5rem;
+background: var(–gold);
+color: var(–black);
+font-family: ‘Barlow Condensed’, sans-serif;
+font-weight: 800;
+font-size: 0.82rem;
+letter-spacing: 0.12em;
+text-transform: uppercase;
+padding: 12px 20px;
+z-index: 999;
+transform: translateY(100px);
+opacity: 0;
+transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.toast.show { transform:translateY(0); opacity:1; }
+
+.loading-state { text-align:center; padding:2.5rem; color:var(–muted); font-family:‘Barlow Condensed’,sans-serif; font-size:0.85rem; letter-spacing:0.15em; text-transform:uppercase; }
+.empty-state { text-align:center; padding:2rem; color:var(–muted); font-size:0.85rem; }
+
+@media (max-width: 600px) {
+.form-grid, .form-grid-3 { grid-template-columns: 1fr; }
+.detail-nums { grid-template-columns: 1fr 1fr; }
+.north-star { gap: 1rem; }
+}
+</style>
+
+</head>
+<body>
+
+<header>
+  <div>
+    <div class="logo-text">⚡ MVMT Oregon</div>
+    <div class="logo-sub">Leader Hub</div>
+  </div>
+  <div class="sync-indicator">
+    <div class="sync-dot" id="syncDot"></div>
+    <span id="syncLabel">Live</span>
+  </div>
+</header>
+
+<div class="top-nav">
+  <button class="nav-tab active" onclick="showPage('home',this)">Home</button>
+  <button class="nav-tab" onclick="showPage('cadence',this)">Cadence</button>
+  <button class="nav-tab" onclick="showPage('warroom',this)">War Room</button>
+  <button class="nav-tab" onclick="showPage('forecast-ref',this)">Forecast Guide</button>
+  <button class="nav-tab" onclick="showPage('forecast-hub',this)">📊 Forecast Hub</button>
+  <button class="nav-tab" onclick="showPage('conduct',this)">Conduct</button>
+  <button class="nav-tab" onclick="showPage('books',this)">Books</button>
+</div>
+
+<main>
+
+  <!-- HOME -->
+
+  <div class="page active" id="page-home">
+    <div class="hero">
+      <div class="hero-eyebrow">SunPower Oregon — MVMT Division</div>
+      <h1>LEAD.<br><span>BUILD.</span><br>WIN.</h1>
+      <div class="north-star">
+        <div class="ns-item">Recruit<span>The North Star</span></div>
+        <div class="ns-div"></div>
+        <div class="ns-item">Train<span>Three-Tool Leader</span></div>
+        <div class="ns-div"></div>
+        <div class="ns-item">Sell<span>Lead by Example</span></div>
+      </div>
+    </div>
+
+```
+<div class="quote-block">
+  <div class="quote-text">"To be a three-tool leader — someone who can recruit, train, and sell at a high level simultaneously — is genuinely rare. We are constantly assessing where we can grow. That self-awareness is what separates good leaders from great ones."</div>
+</div>
+
+<div class="stats-row">
+  <div class="stat-box">
+    <div class="stat-label">Daily Standard</div>
+    <div class="stat-value gold">2+</div>
+    <div class="stat-context">Sets per day, 6 days/week</div>
+  </div>
+  <div class="stat-box">
+    <div class="stat-label">Monthly Min</div>
+    <div class="stat-value">6</div>
+    <div class="stat-context">Personal sales</div>
+  </div>
+  <div class="stat-box">
+    <div class="stat-label">The Tribe</div>
+    <div class="stat-value green">48</div>
+    <div class="stat-context">Sets/month earns entry</div>
+  </div>
+  <div class="stat-box">
+    <div class="stat-label">Masterclass</div>
+    <div class="stat-value">1</div>
+    <div class="stat-context">Per quarter — host or lead</div>
+  </div>
+</div>
+
+<div class="quote-block">
+  <div class="quote-text">"A title without production is just a word. Miss the monthly standard → 30-day probation. Don't recover → forfeit title and overrides. No exceptions."</div>
+</div>
+```
+
+  </div>
+
+  <!-- CADENCE -->
+
+  <div class="page" id="page-cadence">
+    <div class="section-label">Weekly Rhythm</div>
+    <div class="section-title">Leader <span>Cadence</span></div>
+
+```
+<div class="cadence-grid">
+  <div class="cadence-card">
+    <div class="cadence-day">Monday</div>
+    <div class="cadence-name">Build the Week</div>
+    <ul class="cadence-items">
+      <li><span class="time-badge">9:00 AM</span>Company leadership call — camera on<span class="mandatory">Mandatory</span></li>
+      <li><span class="time-badge">10:00 AM</span>Setter team meeting</li>
+      <li>Post scoreboard from prior night goals</li>
+      <li>Morning message: mindset, forecast, recognition</li>
+      <li>Private callup of low performers</li>
+    </ul>
+  </div>
+  <div class="cadence-card">
+    <div class="cadence-day">Tuesday</div>
+    <div class="cadence-name">War Room</div>
+    <ul class="cadence-items">
+      <li><span class="time-badge">11:00 AM</span>Oregon War Room Council — camera on<span class="mandatory">Mandatory</span></li>
+      <li>Prior week numbers ready</li>
+      <li>Forecast vs actual prepared</li>
+      <li>Action plan locked</li>
+      <li>Recruiting update ready</li>
+    </ul>
+  </div>
+  <div class="cadence-card">
+    <div class="cadence-day">Thursday</div>
+    <div class="cadence-name">Mid-Week Push</div>
+    <ul class="cadence-items">
+      <li><span class="time-badge">10:00 AM</span>Setter team meeting</li>
+      <li>Assess week-to-date vs forecast</li>
+      <li>Adjust plan if needed</li>
+      <li>Identify who needs a push</li>
+      <li>Spot coach low performers privately</li>
+    </ul>
+  </div>
+  <div class="cadence-card">
+    <div class="cadence-day">Friday</div>
+    <div class="cadence-name">Close the Week</div>
+    <ul class="cadence-items">
+      <li>Confirm all reps self-reported weekly totals</li>
+      <li>Review week vs forecast</li>
+      <li>Text next week forecast to Bryan<span class="mandatory">EOD</span></li>
+      <li>Recognize top performers</li>
+      <li>Set tone for next week</li>
+    </ul>
+  </div>
+  <div class="cadence-card">
+    <div class="cadence-day">Daily</div>
+    <div class="cadence-name">Every Day</div>
+    <ul class="cadence-items">
+      <li>Post scoreboard from prior night goals</li>
+      <li>Monitor Telegram in real time</li>
+      <li>Spot coach privately mid-shift</li>
+      <li>Post closing message with final tally</li>
+      <li>2+ sets personally — same as your reps</li>
+    </ul>
+  </div>
+  <div class="cadence-card">
+    <div class="cadence-day">Monthly</div>
+    <div class="cadence-name">Build the Org</div>
+    <ul class="cadence-items">
+      <li>Confirm Tribe qualifications (48 sets)</li>
+      <li>1:1s with all Tribe members</li>
+      <li>Host Tribe Dinner</li>
+      <li>Leaderboard reset — clean slate</li>
+      <li>Recruiting Night — bring candidates</li>
+      <li>Book Club discussion at War Room</li>
+    </ul>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-title">Meeting Format — Mon & Thu @ 10am (45min–1hr)</div>
+  <ul class="cadence-items" style="list-style:none;">
+    <li>Music playing as reps arrive — clean, no expletives</li>
+    <li>Mindset Minute — top performer shares what's improved their game</li>
+    <li>Numbers + Recognition — prior week KPIs, top performer spins the wheel (funded by you)</li>
+    <li>Training — delegated to a high performer, topic based on closer feedback + intuition</li>
+  </ul>
+</div>
+```
+
+  </div>
+
+  <!-- WAR ROOM -->
+
+  <div class="page" id="page-warroom">
+    <div class="section-label">Tuesday 11am</div>
+    <div class="section-title">War Room <span>Prep</span></div>
+    <p style="color:var(--muted);font-size:0.82rem;margin-bottom:1.5rem;">Tap each item to check off before the call.</p>
+
+```
+<div class="warroom-grid" id="warroomGrid">
+  <div class="warroom-item" onclick="toggleCheck(this)"><div class="warroom-check"></div><div class="warroom-text">Last week's numbers — sets, sits, sales</div></div>
+  <div class="warroom-item" onclick="toggleCheck(this)"><div class="warroom-check"></div><div class="warroom-text">Forecast vs actual — how did you perform against your projection?</div></div>
+  <div class="warroom-item" onclick="toggleCheck(this)"><div class="warroom-check"></div><div class="warroom-text">What worked last week</div></div>
+  <div class="warroom-item" onclick="toggleCheck(this)"><div class="warroom-check"></div><div class="warroom-text">What didn't work last week</div></div>
+  <div class="warroom-item" onclick="toggleCheck(this)"><div class="warroom-check"></div><div class="warroom-text">This week's forecast + your plan to hit it</div></div>
+  <div class="warroom-item" onclick="toggleCheck(this)"><div class="warroom-check"></div><div class="warroom-text">Action plan for this week</div></div>
+  <div class="warroom-item" onclick="toggleCheck(this)"><div class="warroom-check"></div><div class="warroom-text">Recruiting updates — pipeline, interviews, new starts</div></div>
+  <div class="warroom-item" onclick="toggleCheck(this)"><div class="warroom-check"></div><div class="warroom-text">Incentives being run in your market this week</div></div>
+  <div class="warroom-item" onclick="toggleCheck(this)"><div class="warroom-check"></div><div class="warroom-text">Any reps that could use a call or shoutout from Bryan</div></div>
+</div>
+
+<button class="btn btn-ghost" style="margin-top:1.25rem;" onclick="resetChecklist()">Reset Checklist</button>
+```
+
+  </div>
+
+  <!-- FORECAST REFERENCE -->
+
+  <div class="page" id="page-forecast-ref">
+    <div class="section-label">5-Element Framework</div>
+    <div class="section-title">How to <span>Forecast</span></div>
+
+```
+<div class="forecast-grid">
+  <div class="forecast-card">
+    <div class="forecast-number">01</div>
+    <div class="forecast-title">Past Performance</div>
+    <ul class="forecast-items">
+      <li>Pull daily, weekly, monthly historical data</li>
+      <li>What has this team produced under similar conditions?</li>
+      <li>Use leaderboards as the baseline</li>
+      <li>All things being equal — this is your starting number</li>
+    </ul>
+  </div>
+  <div class="forecast-card">
+    <div class="forecast-number">02</div>
+    <div class="forecast-title">Leadership Intuition</div>
+    <ul class="forecast-items">
+      <li>What state of mind are they in?</li>
+      <li>Are they good at home?</li>
+      <li>Do they understand the mission?</li>
+      <li>Do they have a plan?</li>
+      <li>Do they know their strengths and weaknesses?</li>
+      <li>Who is working well with each other?</li>
+    </ul>
+  </div>
+  <div class="forecast-card">
+    <div class="forecast-number">03</div>
+    <div class="forecast-title">Actual Opportunities</div>
+    <ul class="forecast-items">
+      <li>Appointments currently on the calendar</li>
+      <li>This is your hard floor</li>
+      <li>Layer the other 4 elements on top</li>
+      <li>Don't forecast below your current pipeline</li>
+    </ul>
+  </div>
+  <div class="forecast-card">
+    <div class="forecast-number">04</div>
+    <div class="forecast-title">Who's in the Field?</div>
+    <ul class="forecast-items">
+      <li>Who is on vacation or sick?</li>
+      <li>Who is struggling right now?</li>
+      <li>Who has time constraints?</li>
+      <li>Same field time as last week or less?</li>
+    </ul>
+  </div>
+  <div class="forecast-card">
+    <div class="forecast-number">05</div>
+    <div class="forecast-title">Incentives</div>
+    <ul class="forecast-items">
+      <li>What company incentives are active?</li>
+      <li>What can you run from your budget?</li>
+      <li>What gets your team genuinely excited?</li>
+      <li>Incentives move behavior — factor into upside</li>
+    </ul>
+  </div>
+</div>
+
+<div class="quote-block">
+  <div class="quote-text">Most of these factors experienced leaders already process intuitively. Codifying them makes the process duplicable. Check these boxes weekly — that habit becomes a system, and that system becomes your edge.</div>
+</div>
+
+<button class="btn btn-primary" onclick="showPage('forecast-hub', document.querySelectorAll('.nav-tab')[4])">→ Go to Forecast Hub</button>
+```
+
+  </div>
+
+  <!-- FORECAST HUB -->
+
+  <div class="page" id="page-forecast-hub">
+    <div class="section-label">Shared — All Leaders</div>
+    <div class="section-title">Forecast <span>Hub</span></div>
+
+```
+<!-- SUB TABS -->
+<div style="display:flex;gap:0;border:1px solid var(--border);margin-bottom:1.5rem;overflow-x:auto;">
+  <button class="btn" id="ftab-dashboard" onclick="showFTab('dashboard')" style="background:var(--gold);color:var(--black);border-radius:0;flex:1;font-size:0.75rem;padding:10px 16px;">Dashboard</button>
+  <button class="btn" id="ftab-submit" onclick="showFTab('submit')" style="background:transparent;color:var(--muted);border:none;border-left:1px solid var(--border);border-radius:0;flex:1;font-size:0.75rem;padding:10px 16px;">Submit</button>
+  <button class="btn" id="ftab-history" onclick="showFTab('history')" style="background:transparent;color:var(--muted);border:none;border-left:1px solid var(--border);border-radius:0;flex:1;font-size:0.75rem;padding:10px 16px;">History</button>
+</div>
+
+<!-- DASHBOARD -->
+<div id="fpage-dashboard">
+  <div class="stats-row">
+    <div class="stat-box"><div class="stat-label">Forecasts In</div><div class="stat-value gold" id="statIn">—</div><div class="stat-context">of 3 markets</div></div>
+    <div class="stat-box"><div class="stat-label">Proj Sets</div><div class="stat-value" id="statSets">—</div><div class="stat-context">all markets</div></div>
+    <div class="stat-box"><div class="stat-label">Proj Sales</div><div class="stat-value green" id="statSales">—</div><div class="stat-context">all markets</div></div>
+    <div class="stat-box"><div class="stat-label">LW Actual</div><div class="stat-value" id="statLW">—</div><div class="stat-context">combined sales</div></div>
+  </div>
+  <div class="market-grid" id="marketCards"><div class="loading-state">Loading...</div></div>
+</div>
+
+<!-- SUBMIT -->
+<div id="fpage-submit" style="display:none;">
+  <div class="card">
+    <div class="card-title">Market + Leader</div>
+    <div class="form-grid">
+      <div>
+        <label>Market</label>
+        <select id="fc_market">
+          <option value="">— Select —</option>
+          <option value="Bend">Bend</option>
+          <option value="Portland">Portland</option>
+          <option value="Medford">Medford</option>
+        </select>
+      </div>
+      <div>
+        <label>Leader Name</label>
+        <input type="text" id="fc_leader" placeholder="Your name">
+      </div>
+      <div>
+        <label>Forecasted Sets</label>
+        <input type="number" id="fc_sets" placeholder="0" min="0">
+      </div>
+      <div>
+        <label>Forecasted Sales</label>
+        <input type="number" id="fc_sales" placeholder="0" min="0">
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">The 5 Elements</div>
+    <div class="element-block">
+      <span class="element-num">1</span>
+      <div class="element-name">Past Performance</div>
+      <div class="form-grid-3">
+        <div><label style="margin-top:0;">LW Sets</label><input type="number" id="fc_lw_sets" placeholder="0" min="0"></div>
+        <div><label style="margin-top:0;">LW Sits</label><input type="number" id="fc_lw_sits" placeholder="0" min="0"></div>
+        <div><label style="margin-top:0;">LW Sales</label><input type="number" id="fc_lw_sales" placeholder="0" min="0"></div>
+      </div>
+      <div class="form-grid" style="margin-top:0.75rem;">
+        <div><label style="margin-top:0;">LW Forecast</label><input type="number" id="fc_lw_forecast" placeholder="0" min="0"></div>
+        <div><label style="margin-top:0;">LW Actual</label><input type="number" id="fc_lw_actual" placeholder="0" min="0"></div>
+      </div>
+    </div>
+    <div class="element-block">
+      <span class="element-num">2</span>
+      <div class="element-name">Leadership Intuition</div>
+      <label style="margin-top:0;">Team state of mind + notable factors</label>
+      <textarea id="fc_intuition" placeholder="How is the team feeling? Who's hot, who's cold?"></textarea>
+    </div>
+    <div class="element-block">
+      <span class="element-num">3</span>
+      <div class="element-name">Actual Opportunities on Calendar</div>
+      <label style="margin-top:0;">Appointments currently booked</label>
+      <input type="number" id="fc_calendar" placeholder="# of appointments now" min="0">
+    </div>
+    <div class="element-block">
+      <span class="element-num">4</span>
+      <div class="element-name">Who's in the Field?</div>
+      <label style="margin-top:0;">Availability — vacations, sick, constraints</label>
+      <textarea id="fc_availability" placeholder="Who's out? Any headcount changes?"></textarea>
+    </div>
+    <div class="element-block">
+      <span class="element-num">5</span>
+      <div class="element-name">Incentives</div>
+      <label style="margin-top:0;">Levers being pulled this week</label>
+      <textarea id="fc_incentives" placeholder="Company incentives, budget, leadership investments"></textarea>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">War Room Prep</div>
+    <div><label style="margin-top:0;">What worked last week</label><textarea id="fc_what_worked" placeholder="Key wins, momentum drivers..."></textarea></div>
+    <div><label>What didn't work last week</label><textarea id="fc_what_didnt" placeholder="Gaps, friction, missed targets..."></textarea></div>
+    <div><label>Action plan this week</label><textarea id="fc_action_plan" placeholder="What are you doing differently?"></textarea></div>
+    <div><label>Recruiting updates</label><textarea id="fc_recruiting" placeholder="Pipeline, interviews, new starts..."></textarea></div>
+    <div><label>Reps who could use a call or shoutout from Bryan</label><textarea id="fc_callouts" placeholder="Names + brief context"></textarea></div>
+  </div>
+
+  <div style="display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:1.5rem;">
+    <button class="btn btn-primary" id="submitBtn" onclick="submitForecast()">Submit Forecast</button>
+    <button class="btn btn-ghost" onclick="generateText()">Generate Telegram Text</button>
+  </div>
+
+  <div class="card" id="telegramOutput" style="display:none;">
+    <div class="card-title">Ready to Send to Bryan</div>
+    <div class="output-block" id="telegramText"></div>
+    <button class="btn btn-ghost" style="margin-top:1rem;" onclick="copyText()">Copy to Clipboard</button>
+  </div>
+</div>
+
+<!-- HISTORY -->
+<div id="fpage-history" style="display:none;">
+  <div class="stats-row">
+    <div class="stat-box"><div class="stat-label">Total Submissions</div><div class="stat-value gold" id="histCount">—</div></div>
+    <div class="stat-box"><div class="stat-label">Avg Accuracy</div><div class="stat-value" id="histAccuracy">—</div><div class="stat-context">forecast vs actual</div></div>
+    <div class="stat-box"><div class="stat-label">Top Market</div><div class="stat-value green" id="histBest">—</div><div class="stat-context">by total sets</div></div>
+  </div>
+  <div class="card">
+    <div class="card-title">All Submissions</div>
+    <div id="historyContent"><div class="loading-state">Loading...</div></div>
+  </div>
+</div>
+```
+
+  </div>
+
+  <!-- CONDUCT -->
+
+  <div class="page" id="page-conduct">
+    <div class="section-label">Non-Negotiables</div>
+    <div class="section-title">Code of <span>Conduct</span></div>
+
+```
+<div class="conduct-grid">
+  <div class="conduct-card">
+    <div class="conduct-card-title">Respect is Mandatory</div>
+    <ul class="conduct-list">
+      <li>Treat every rep, manager, and leader with dignity — in person, on calls, in group chats</li>
+      <li>Disagreements go through proper channels — never in front of the team</li>
+      <li>Protect the unity and trust of the organization</li>
+    </ul>
+  </div>
+  <div class="conduct-card">
+    <div class="conduct-card-title">Communication is Intentional</div>
+    <ul class="conduct-list">
+      <li>What you say, how you say it, and when you say it matters</li>
+      <li>Be clear, direct, and professional in all team interactions</li>
+      <li>Stay active and responsive in all team chats</li>
+    </ul>
+  </div>
+  <div class="conduct-card">
+    <div class="conduct-card-title">Protect the Standard</div>
+    <ul class="conduct-list">
+      <li>You are a guardian of MVMT culture</li>
+      <li>Refuse to participate in or tolerate gossip or negativity</li>
+      <li>No public undermining — of reps, co-managers, or leadership. Ever.</li>
+    </ul>
+  </div>
+  <div class="conduct-card">
+    <div class="conduct-card-title">You Are Always Being Watched</div>
+    <ul class="conduct-list">
+      <li>How you treat people when no one is watching is your real character</li>
+      <li>Your attitude, work ethic, and respect sets the tone for the entire team</li>
+      <li>Lead accordingly — every day, every interaction</li>
+    </ul>
+  </div>
+</div>
+
+<div class="quote-block">
+  <div class="quote-text">"How you treat people when no one is watching is your real character."</div>
+</div>
+```
+
+  </div>
+
+  <!-- BOOKS -->
+
+  <div class="page" id="page-books">
+    <div class="section-label">Monthly Reading</div>
+    <div class="section-title">Book Club <span>2025</span></div>
+    <p style="color:var(--muted);font-size:0.82rem;margin-bottom:1.5rem;">Come to War Room prepared to discuss takeaways and how they apply to your market.</p>
+
+```
+<div class="books-grid">
+  <div class="book-card current"><div class="book-month">April</div><div class="book-title">The 21 Irrefutable Laws of Leadership</div><div class="book-author">John C. Maxwell</div></div>
+  <div class="book-card"><div class="book-month">May</div><div class="book-title">Extreme Ownership</div><div class="book-author">Jocko Willink & Leif Babin</div></div>
+  <div class="book-card"><div class="book-month">June</div><div class="book-title">Never Split the Difference</div><div class="book-author">Chris Voss</div></div>
+  <div class="book-card"><div class="book-month">July</div><div class="book-title">Atomic Habits</div><div class="book-author">James Clear</div></div>
+  <div class="book-card"><div class="book-month">August</div><div class="book-title">The Happiness Advantage</div><div class="book-author">Shawn Achor</div></div>
+  <div class="book-card"><div class="book-month">September</div><div class="book-title">No Matter Watt</div><div class="book-author">Michael O'Donnell</div></div>
+  <div class="book-card"><div class="book-month">October</div><div class="book-title">The Psychology of Selling</div><div class="book-author">Brian Tracy</div></div>
+  <div class="book-card"><div class="book-month">November</div><div class="book-title">The Power of One More</div><div class="book-author">Ed Mylett</div></div>
+  <div class="book-card"><div class="book-month">December</div><div class="book-title">The Four Agreements</div><div class="book-author">Don Miguel Ruiz</div></div>
+</div>
+```
+
+  </div>
+
+</main>
+
+<!-- MODAL -->
+
+<div class="modal-overlay" id="modalOverlay" onclick="closeModalOutside(event)">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title" id="modalTitle">—</div>
+      <button class="modal-close" onclick="closeModal()">×</button>
+    </div>
+    <div class="modal-body" id="modalBody"></div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const STORAGE_KEY = 'mvmt_forecasts_v2';
+
+// ====== NAV ======
+function showPage(id, el) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('page-' + id).classList.add('active');
+  if (el) el.classList.add('active');
+  if (id === 'forecast-hub') loadDashboard();
+}
+
+function showFTab(tab) {
+  ['dashboard','submit','history'].forEach(t => {
+    document.getElementById('fpage-' + t).style.display = t === tab ? 'block' : 'none';
+    const btn = document.getElementById('ftab-' + t);
+    if (btn) {
+      btn.style.background = t === tab ? 'var(--gold)' : 'transparent';
+      btn.style.color = t === tab ? 'var(--black)' : 'var(--muted)';
+    }
+  });
+  if (tab === 'history') loadHistory();
+  if (tab === 'dashboard') loadDashboard();
+}
+
+function toggleCheck(el) { el.classList.toggle('checked'); }
+function resetChecklist() { document.querySelectorAll('.warroom-item').forEach(el => el.classList.remove('checked')); }
+
+// ====== UTILS ======
+function getWeekKey() {
+  const now = new Date();
+  const monday = new Date(now);
+  monday.setDate(now.getDate() - ((now.getDay() + 6) % 7));
+  return monday.toISOString().split('T')[0];
+}
+
+function getWeekLabel() {
+  const now = new Date();
+  const monday = new Date(now);
+  monday.setDate(now.getDate() - ((now.getDay() + 6) % 7));
+  const friday = new Date(monday);
+  friday.setDate(monday.getDate() + 4);
+  return `Week of ${monday.toLocaleDateString('en-US',{month:'short',day:'numeric'})} – ${friday.toLocaleDateString('en-US',{month:'short',day:'numeric'})}`;
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2800);
+}
+
+function setSyncState(state) {
+  const dot = document.getElementById('syncDot');
+  const lbl = document.getElementById('syncLabel');
+  dot.className = 'sync-dot' + (state === 'loading' ? ' loading' : state === 'error' ? ' error' : '');
+  lbl.textContent = state === 'loading' ? 'Syncing...' : state === 'error' ? 'Offline' : 'Live';
+}
+
+// ====== STORAGE ======
+async function loadForecasts() {
+  setSyncState('loading');
+  try {
+    const result = await window.storage.get(STORAGE_KEY, true);
+    setSyncState('live');
+    return result ? JSON.parse(result.value) : [];
+  } catch(e) {
+    setSyncState('live');
+    return [];
+  }
+}
+
+async function saveForecasts(forecasts) {
+  setSyncState('loading');
+  try {
+    await window.storage.set(STORAGE_KEY, JSON.stringify(forecasts), true);
+    setSyncState('live');
+    return true;
+  } catch(e) {
+    setSyncState('error');
+    showToast('⚠ Save failed — try again');
+    return false;
+  }
+}
+
+// ====== DASHBOARD ======
+async function loadDashboard() {
+  const forecasts = await loadForecasts();
+  const thisWeek = forecasts.filter(f => f.week === getWeekKey());
+
+  const totalSets = thisWeek.reduce((a,b) => a+(b.sets||0), 0);
+  const totalSales = thisWeek.reduce((a,b) => a+(b.sales||0), 0);
+  const totalLW = thisWeek.reduce((a,b) => a+(b.lw_actual||0), 0);
+
+  document.getElementById('statIn').textContent = thisWeek.length;
+  document.getElementById('statSets').textContent = thisWeek.length ? totalSets : '—';
+  document.getElementById('statSales').textContent = thisWeek.length ? totalSales : '—';
+  document.getElementById('statLW').textContent = thisWeek.length ? totalLW : '—';
+
+  const markets = ['Bend','Portland','Medford'];
+  const container = document.getElementById('marketCards');
+  container.innerHTML = markets.map(market => {
+    const f = thisWeek.find(x => x.market === market);
+    const submitted = !!f;
+    const accuracy = f && f.lw_forecast > 0 ? Math.round((f.lw_actual/f.lw_forecast)*100)+'%' : '—';
+    return `<div class="market-card ${submitted?'submitted':'pending'}">
+      <div class="market-name market-${market.toLowerCase()}">${market}</div>
+      <div class="market-status"><span class="status-dot ${submitted?'dot-green':'dot-red'}"></span>${submitted?`Submitted by ${f.leader}`:'Forecast Pending'}</div>
+      ${submitted ? `
+        <div class="market-numbers">
+          <div><div class="mnum-label">Proj Sets</div><div class="mnum-value">${f.sets}</div></div>
+          <div><div class="mnum-label">Proj Sales</div><div class="mnum-value" style="color:var(--green)">${f.sales}</div></div>
+          <div><div class="mnum-label">LW Actual</div><div class="mnum-value" style="font-size:1.4rem;color:var(--muted)">${f.lw_actual||'—'}</div></div>
+          <div><div class="mnum-label">LW Accuracy</div><div class="mnum-value" style="font-size:1.4rem;color:var(--muted)">${accuracy}</div></div>
+        </div>
+        <button class="drill-btn" onclick="openDetail('${f.id}')">View Full Forecast →</button>
+      ` : `<div style="color:var(--muted);font-size:0.8rem;margin-top:0.5rem;">No submission yet this week</div>`}
+    </div>`;
+  }).join('');
+}
+
+// ====== MODAL ======
+async function openDetail(id) {
+  const forecasts = await loadForecasts();
+  const f = forecasts.find(x => x.id == id);
+  if (!f) return;
+  const accuracy = f.lw_forecast > 0 ? Math.round((f.lw_actual/f.lw_forecast)*100)+'%' : '—';
+  document.getElementById('modalTitle').textContent = `${f.market} — ${f.week}`;
+  document.getElementById('modalBody').innerHTML = `
+    <div class="detail-nums">
+      <div class="detail-num-box"><div class="detail-num-val">${f.sets}</div><div class="detail-num-lbl">Proj Sets</div></div>
+      <div class="detail-num-box"><div class="detail-num-val" style="color:var(--green)">${f.sales}</div><div class="detail-num-lbl">Proj Sales</div></div>
+      <div class="detail-num-box"><div class="detail-num-val" style="color:var(--muted)">${accuracy}</div><div class="detail-num-lbl">LW Accuracy</div></div>
+    </div>
+    ${drow('Last Week','Sets: '+f.lw_sets+' | Sits: '+f.lw_sits+' | Sales: '+f.lw_sales)}
+    ${drow('LW Forecast vs Actual','Forecast: '+f.lw_forecast+' → Actual: '+f.lw_actual)}
+    ${drow('Calendar Appts Now', f.calendar||'—')}
+    ${drow('Leadership Intuition', f.intuition||'—')}
+    ${drow("Who's in the Field", f.availability||'—')}
+    ${drow('Incentives', f.incentives||'—')}
+    ${drow('What Worked', f.what_worked||'—')}
+    ${drow("What Didn't Work", f.what_didnt||'—')}
+    ${drow('Action Plan', f.action_plan||'—')}
+    ${drow('Recruiting', f.recruiting||'—')}
+    ${drow('Call Up / Shoutout', f.callouts||'—')}
+    ${drow('Submitted', f.submittedAt+' by '+f.leader)}
+  `;
+  document.getElementById('modalOverlay').classList.add('open');
+}
+
+function drow(label, value) {
+  return `<div class="detail-row"><div class="detail-label">${label}</div><div class="detail-value">${value}</div></div>`;
+}
+
+function closeModal() { document.getElementById('modalOverlay').classList.remove('open'); }
+function closeModalOutside(e) { if (e.target === document.getElementById('modalOverlay')) closeModal(); }
+
+// ====== SUBMIT ======
+async function submitForecast() {
+  const market = document.getElementById('fc_market').value;
+  const leader = document.getElementById('fc_leader').value.trim();
+  const sets = parseInt(document.getElementById('fc_sets').value) || 0;
+  const sales = parseInt(document.getElementById('fc_sales').value) || 0;
+
+  if (!market || !leader || !sets) { showToast('⚠ Market, leader, and sets required'); return; }
+
+  const btn = document.getElementById('submitBtn');
+  btn.disabled = true;
+  btn.textContent = 'Saving...';
+
+  const forecasts = await loadForecasts();
+  const filtered = forecasts.filter(f => !(f.market === market && f.week === getWeekKey()));
+
+  filtered.push({
+    id: Date.now(), week: getWeekKey(),
+    submittedAt: new Date().toLocaleString('en-US',{month:'short',day:'numeric',hour:'numeric',minute:'2-digit'}),
+    market, leader, sets, sales,
+    lw_sets: parseInt(document.getElementById('fc_lw_sets').value)||0,
+    lw_sits: parseInt(document.getElementById('fc_lw_sits').value)||0,
+    lw_sales: parseInt(document.getElementById('fc_lw_sales').value)||0,
+    lw_forecast: parseInt(document.getElementById('fc_lw_forecast').value)||0,
+    lw_actual: parseInt(document.getElementById('fc_lw_actual').value)||0,
+    calendar: parseInt(document.getElementById('fc_calendar').value)||0,
+    intuition: document.getElementById('fc_intuition').value,
+    availability: document.getElementById('fc_availability').value,
+    incentives: document.getElementById('fc_incentives').value,
+    what_worked: document.getElementById('fc_what_worked').value,
+    what_didnt: document.getElementById('fc_what_didnt').value,
+    action_plan: document.getElementById('fc_action_plan').value,
+    recruiting: document.getElementById('fc_recruiting').value,
+    callouts: document.getElementById('fc_callouts').value,
+  });
+
+  const saved = await saveForecasts(filtered);
+  btn.disabled = false;
+  btn.textContent = 'Submit Forecast';
+
+  if (saved) {
+    showToast(`✅ ${market} forecast submitted`);
+    clearForm();
+    showFTab('dashboard');
+  }
+}
+
+function clearForm() {
+  ['fc_market','fc_leader','fc_sets','fc_sales','fc_lw_sets','fc_lw_sits','fc_lw_sales',
+   'fc_lw_forecast','fc_lw_actual','fc_calendar','fc_intuition','fc_availability',
+   'fc_incentives','fc_what_worked','fc_what_didnt','fc_action_plan','fc_recruiting','fc_callouts']
+  .forEach(id => { const el = document.getElementById(id); if(el) el.value=''; });
+  document.getElementById('telegramOutput').style.display = 'none';
+}
+
+function generateText() {
+  const get = id => document.getElementById(id)?.value || '';
+  const text = `⚡ WEEKLY FORECAST — ${(get('fc_market')||'[MARKET]').toUpperCase()}
+${getWeekLabel()}
+Submitted by: ${get('fc_leader')||'[LEADER]'}
+
+📊 NEXT WEEK FORECAST
+Sets: ${get('fc_sets')||'0'}  |  Sales: ${get('fc_sales')||'0'}
+
+📅 LAST WEEK
+Sets: ${get('fc_lw_sets')||'0'}  |  Sits: ${get('fc_lw_sits')||'0'}  |  Sales: ${get('fc_lw_sales')||'0'}
+Forecast: ${get('fc_lw_forecast')||'0'} → Actual: ${get('fc_lw_actual')||'0'}
+
+📆 CALENDAR APPTS NOW: ${get('fc_calendar')||'0'}
+
+👥 TEAM READ
+${get('fc_intuition')||'N/A'}
+
+🏃 WHO'S IN THE FIELD
+${get('fc_availability')||'N/A'}
+
+🔥 INCENTIVES
+${get('fc_incentives')||'N/A'}
+
+✅ WHAT WORKED
+${get('fc_what_worked')||'N/A'}
+
+❌ WHAT DIDN'T WORK
+${get('fc_what_didnt')||'N/A'}
+
+🎯 ACTION PLAN
+${get('fc_action_plan')||'N/A'}
+
+🎯 RECRUITING
+${get('fc_recruiting')||'N/A'}
+
+📣 CALL UP / SHOUTOUT
+${get('fc_callouts')||'N/A'}`;
+
+  document.getElementById('telegramText').textContent = text;
+  document.getElementById('telegramOutput').style.display = 'block';
+  document.getElementById('telegramOutput').scrollIntoView({behavior:'smooth'});
+}
+
+function copyText() {
+  navigator.clipboard.writeText(document.getElementById('telegramText').textContent);
+  showToast('Copied to clipboard');
+}
+
+// ====== HISTORY ======
+async function loadHistory() {
+  const forecasts = await loadForecasts();
+  document.getElementById('histCount').textContent = forecasts.length || '0';
+  if (!forecasts.length) { document.getElementById('historyContent').innerHTML = '<div class="empty-state">No submissions yet</div>'; return; }
+
+  const accuracies = forecasts.filter(f => f.lw_forecast > 0).map(f => f.lw_actual/f.lw_forecast);
+  if (accuracies.length) document.getElementById('histAccuracy').textContent = Math.round(accuracies.reduce((a,b)=>a+b,0)/accuracies.length*100)+'%';
+
+  const mktTotals = {};
+  forecasts.forEach(f => { mktTotals[f.market] = (mktTotals[f.market]||0)+f.sets; });
+  const best = Object.entries(mktTotals).sort((a,b)=>b[1]-a[1])[0];
+  if (best) document.getElementById('histBest').textContent = best[0];
+
+  const rows = [...forecasts].sort((a,b)=>b.id-a.id).map(f => {
+    const accNum = f.lw_forecast > 0 ? Math.round((f.lw_actual/f.lw_forecast)*100) : null;
+    const accStr = accNum !== null ? accNum+'%' : '—';
+    const accClass = accNum===null?'':accNum>=90?'accuracy-good':accNum<70?'accuracy-low':'accuracy-ok';
+    return `<tr onclick="openDetail('${f.id}')">
+      <td style="color:var(--muted);font-size:0.75rem;">${f.week}</td>
+      <td><span class="market-tag tag-${f.market.toLowerCase()}">${f.market}</span></td>
+      <td style="color:var(--muted);font-size:0.82rem;">${f.leader}</td>
+      <td style="font-family:'Barlow Condensed';font-weight:800;color:var(--gold);">${f.sets}</td>
+      <td style="font-family:'Barlow Condensed';font-weight:800;color:var(--green);">${f.sales}</td>
+      <td>${f.lw_actual||'—'}</td>
+      <td class="${accClass}">${accStr}</td>
+    </tr>`;
+  }).join('');
+
+  document.getElementById('historyContent').innerHTML = `
+    <div style="overflow-x:auto;">
+    <table class="hist-table">
+      <thead><tr><th>Week</th><th>Market</th><th>Leader</th><th>Sets</th><th>Sales</th><th>LW Act</th><th>Accuracy</th></tr></thead>
+      <tbody>${rows}</tbody>
+    </table></div>`;
+}
+
+// ====== INIT ======
+loadDashboard();
+</script>
+
+</body>
+</html>
